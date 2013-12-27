@@ -1,0 +1,20 @@
+{
+  "name": "60fps-scroll",
+  "version": "0.0.1",
+  "description": "A little library that *could* make your site scroll faster",
+  "main": "dist/60fps-scroll.js",
+  "scripts": {
+    "test": "grunt"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ryanseddon/60fps-scroll.git"
+  },
+  "author": "Ryan Seddon",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "gitHead": "ba8916381d8ffe01e4735edbd40f856187107c87",
+  "devDependencies": {
+    "gulp": "~3.1.4"
+  }
+}
