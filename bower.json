@@ -1,0 +1,25 @@
+{
+  "name": "60fps-scroll",
+  "version": "0.1.0",
+  "homepage": "https://github.com/ryanseddon/60fps-scroll",
+  "authors": [
+    "Ryan Seddon"
+  ],
+  "description": "A little library that *could* make your site scroll faster",
+  "main": "dist/60fps-scroll.js",
+  "keywords": [
+    "60fps",
+    "Scroll performance"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "src",
+    "dist/main.js",
+    "dist/utils.js"
+  ]
+}

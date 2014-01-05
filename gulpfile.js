@@ -1,27 +1,36 @@
 var gulp = require('gulp');
-var es6ModuleTranspiler = require('gulp-es6-module-transpiler');
 var browserify = require('gulp-browserify');
+var through = require('through');
+var Compiler = require('es6-module-transpiler').Compiler;
 var concat = require('gulp-concat');
 
-gulp.task('transpile', function() {
-  gulp.src('src/*.js')
-    .pipe(es6ModuleTranspiler({type: 'cjs'}))
-    .pipe(gulp.dest('./dist'));
-});
+// I have a gulp task gulp-es6-module-transpiler but I dont know how
+// to use it as I'm not sure how to access the buffer from the task so
+// browserifies transform task can work correctly? Can you help?
+function compile(opts) {
+    var buf = '';
+    return function () {
+        return through(write, end);
+    };
 
-gulp.task('bundle', function() {
-  gulp.src('dist/main.js')
-    .pipe(browserify({
-      debug: true
-    }))
-    .pipe(concat('60fps-scroll.js'))
-    .pipe(gulp.dest('./dist'));
-});
+    function write(data) {
+        buf += data;
+    }
+
+    function end() {
+        this.queue((new Compiler(buf, '', opts)).toCJS());
+        this.queue(null);
+        buf = '';
+    }
+}
 
 gulp.task('build', function() {
-  gulp.run('transpile');
-  // For some reason bundle fails unless I do it as a separate run call?
-  gulp.run('bundle');
+    gulp.src('src/main.js')
+        .pipe(browserify({
+            transform : [compile()]
+        }))
+        .pipe(concat('60fps-scroll.js'))
+        .pipe(gulp.dest('./dist'));
 });
 
 // The default task (called when you run `gulp`)

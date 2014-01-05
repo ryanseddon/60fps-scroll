@@ -1,14 +1,18 @@
 import { support, dispatchClick } from './utils';
 
-var cover = document.createElement('div'),
-    body = document.body,
-    coverStyle = cover.style,
-    scrollStarted = false,
-    timer,
-    clicked = false,
-    pos = { x: 0, y: 0 };
+document.addEventListener('DOMContentLoaded', function() {
+    if(!support) {
+        return;
+    }
 
-if(support) {
+    var cover = document.createElement('div'),
+        body = document.body,
+        coverStyle = cover.style,
+        scrollStarted = false,
+        timer,
+        clicked = false,
+        pos = { x: 0, y: 0 };
+
     coverStyle.cssText = [
         '-webkit-transform: translate3d(0,0,0);',
         'transform: translate3d(0,0,0);',
@@ -23,7 +27,7 @@ if(support) {
     ].join('');
     body.appendChild(cover);
 
-    window.addEventListener('scroll', function() {
+    window.addEventListener('scroll', function scroll() {
         if(!scrollStarted) {
             coverStyle.pointerEvents = 'auto';
             scrollStarted = true;
@@ -41,11 +45,11 @@ if(support) {
     }, false);
 
     // capture all clicks and store x, y coords for later
-    document.addEventListener('click', function(event) {
+    document.addEventListener('click', function clickCatcher(event) {
         if(event.target === cover && !event.synthetic) {
             pos.x = event.clientX;
             pos.y = event.clientY;
             clicked = true;
         }
     }, false);
-}
+}, false);

@@ -4,7 +4,7 @@ var support = (function support() {
     return element.style.pointerEvents === 'auto';
 }());
 
-function dispatchClick(coords){
+function dispatchClick(coords) {
     var event = document.createEvent('MouseEvent'),
         elem = document.elementFromPoint(coords.x, coords.y);
 
