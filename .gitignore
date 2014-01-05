@@ -1,1 +1,3 @@
 node_modules
+dist/main.js
+dist/utils.js

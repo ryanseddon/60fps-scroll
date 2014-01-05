@@ -15,6 +15,10 @@
   "readmeFilename": "README.md",
   "gitHead": "ba8916381d8ffe01e4735edbd40f856187107c87",
   "devDependencies": {
-    "gulp": "~3.1.4"
-  }
+    "gulp": "~3.1.4",
+    "gulp-es6-module-transpiler": "0.0.0",
+    "gulp-browserify": "~0.2.2",
+    "gulp-concat": "~2.1.4"
+  },
+  "dependencies": {}
 }

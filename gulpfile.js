@@ -1,48 +1,35 @@
-/*
-  This is an EXAMPLE gulpfile.js
-  You'll want to change it to match your project.
-  Find plugins at https://npmjs.org/browse/keyword/gulpplugin
-*/
 var gulp = require('gulp');
-var uglify = require('gulp-uglify');
+var es6ModuleTranspiler = require('gulp-es6-module-transpiler');
+var browserify = require('gulp-browserify');
+var concat = require('gulp-concat');
 
-gulp.task('scripts', function() {
-  // Minify and copy all JavaScript (except vendor scripts)
-  gulp.src(['client/js/**/*.js', '!client/js/vendor/**'])
-    .pipe(uglify())
-    .pipe(gulp.dest('build/js'));
-
-  // Copy vendor files
-  gulp.src('client/js/vendor/**')
-    .pipe(gulp.dest('build/js/vendor'));
+gulp.task('transpile', function() {
+  gulp.src('src/*.js')
+    .pipe(es6ModuleTranspiler({type: 'cjs'}))
+    .pipe(gulp.dest('./dist'));
 });
 
-// Copy all static assets
-gulp.task('copy', function() {
-  gulp.src('client/img/**')
-    .pipe(gulp.dest('build/img'));
+gulp.task('bundle', function() {
+  gulp.src('dist/main.js')
+    .pipe(browserify({
+      debug: true
+    }))
+    .pipe(concat('60fps-scroll.js'))
+    .pipe(gulp.dest('./dist'));
+});
 
-  gulp.src('client/css/**')
-    .pipe(gulp.dest('build/css'));
-
-  gulp.src('client/*.html')
-    .pipe(gulp.dest('build'));
+gulp.task('build', function() {
+  gulp.run('transpile');
+  // For some reason bundle fails unless I do it as a separate run call?
+  gulp.run('bundle');
 });
 
 // The default task (called when you run `gulp`)
 gulp.task('default', function() {
-  gulp.run('scripts', 'copy');
+  gulp.run('build');
 
   // Watch files and run tasks if they change
-  gulp.watch('client/js/**', function(event) {
-    gulp.run('scripts');
-  });
-
-  gulp.watch([
-    'client/img/**',
-    'client/css/**',
-    'client/*.html'
-  ], function(event) {
-    gulp.run('copy');
+  gulp.watch('src/*.js', function(event) {
+    gulp.run('build');
   });
 });
