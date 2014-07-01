@@ -1,17 +1,27 @@
-import { support, dispatchClick } from './utils';
+var utils = require('./utils'),
+    support = utils.support,
+    dispatchClick = utils.dispatchClick;
 
-document.addEventListener('DOMContentLoaded', function() {
-    if(!support) {
+// ES6
+// import { support, dispatchClick } from './utils';
+
+(function() {
+    'use strict';
+
+    if (!support)
         return;
-    }
 
     var cover = document.createElement('div'),
         body = document.body,
         coverStyle = cover.style,
         scrollStarted = false,
-        timer,
+        raf,
         clicked = false,
-        pos = { x: 0, y: 0 };
+        scrollUpdate,
+        pos = {
+            x: 0,
+            y: 0
+        };
 
     coverStyle.cssText = [
         '-webkit-transform: translate3d(0,0,0);',
@@ -25,31 +35,33 @@ document.addEventListener('DOMContentLoaded', function() {
         'z-index: 9;',
         'pointer-events: none'
     ].join('');
+
     body.appendChild(cover);
 
+    scrollUpdate = function() {
+        coverStyle.pointerEvents = 'none';
+        scrollStarted = false;
+        if (clicked) {
+            dispatchClick(pos);
+            clicked = false;
+        }
+    };
+
     window.addEventListener('scroll', function scroll() {
-        if(!scrollStarted) {
+        if (!scrollStarted) {
             coverStyle.pointerEvents = 'auto';
             scrollStarted = true;
         }
-        clearTimeout(timer);
-
-        timer = setTimeout(function(){
-            coverStyle.pointerEvents = 'none';
-            scrollStarted = false;
-            if(clicked) {
-                dispatchClick(pos);
-                clicked = false;
-            }
-        },500);
+        cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(scrollUpdate);
     }, false);
 
     // capture all clicks and store x, y coords for later
     document.addEventListener('click', function clickCatcher(event) {
-        if(event.target === cover && !event.synthetic) {
+        if (event.target === cover && !event.synthetic) {
             pos.x = event.clientX;
             pos.y = event.clientY;
             clicked = true;
         }
     }, false);
-}, false);
+}());

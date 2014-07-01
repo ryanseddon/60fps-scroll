@@ -10,15 +10,22 @@ function dispatchClick(coords) {
 
     event.initMouseEvent(
         'click',
-        true /* bubble */, true /* cancelable */,
-        window, null,
+        true, /* bubble */
+        true, /* cancelable */
+        window,
+        null,
         coords.x, coords.y, 0, 0, /* coordinates */
         false, false, false, false, /* modifier keys */
-        0 /*left*/, null
+        0, /*left*/
+        null
     );
     event.synthetic = true;
 
     elem.dispatchEvent(event);
 }
 
-export { support, dispatchClick };
+// ES6
+// export { support, dispatchClick };
+
+exports.support = support;
+exports.dispatchClick = dispatchClick;
