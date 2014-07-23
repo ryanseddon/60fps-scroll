@@ -3,6 +3,10 @@
 var support = require("./utils").support;
 var dispatchClick = require("./utils").dispatchClick;
 
+if (typeof document.addEventListener !== 'function') {
+    return;
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     if(!support) {
         return;

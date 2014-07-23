@@ -1,5 +1,9 @@
 import { support, dispatchClick } from './utils';
 
+if (typeof document.addEventListener !== 'function') {
+    return;
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     if(!support) {
         return;
