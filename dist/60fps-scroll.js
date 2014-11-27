@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
         'left: 0;',
         'bottom: 0;',
         'opacity: 0;',
-        'z-index: 9;',
+        'z-index: 2147483647;',
         'pointer-events: none'
     ].join('');
     body.appendChild(cover);
