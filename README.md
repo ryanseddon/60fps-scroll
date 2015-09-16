@@ -1,3 +1,10 @@
+# Deprecated!
+
+## Why?
+
+Chrome has released a fix that stops mouse events from firing when scrolling so you don't need this lib any more. See Chrome [status page](https://www.chromestatus.com/feature/5697181675683840).
+
+
 60fps-scroll
 ============
 
